@@ -1,10 +1,9 @@
 import Image from "next/image";
 
-export default function Spotlight({ image, artist }) {
+export default function ArtPieceDetail({ image, title, artist, year, genre }) {
   return (
     <div>
-      <h2>Spotlight:</h2>
-
+      <h2>{title}</h2>
       <Image
         src={image}
         alt={artist}
@@ -13,6 +12,8 @@ export default function Spotlight({ image, artist }) {
         height={100}
       />
       <p>{artist}</p>
+      <p>Year: {year}</p>
+      <p>Genre: {genre}</p>
     </div>
   );
 }
