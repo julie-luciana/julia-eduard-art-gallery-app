@@ -1,9 +1,11 @@
 import Layout from "@/components/Layout/Layout";
 import GlobalStyle from "../styles";
 import useSWR from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import FavoriteButton from "@/components/FavoriteButton/FavoriteButton";
 
 const URL = "https://example-apis.vercel.app/api/art";
+
 export default function App({ Component, pageProps }) {
   const fetcher = async (url) => {
     const res = await fetch(url);
@@ -11,7 +13,6 @@ export default function App({ Component, pageProps }) {
     if (!res.ok) {
       const error = new Error("An error occurred while fetching the images.");
       error.info = await res.json();
-
       error.status = res.status;
       throw error;
     }
@@ -20,50 +21,41 @@ export default function App({ Component, pageProps }) {
 
   const { data, error } = useSWR(URL, fetcher);
 
-  //   //______________
-  //   useEffect(() => {
-  //     if (data) {
-  //       setArtPiecesInfo((currentInfo) =>
-  //         data.map((piece) => {
-  //           const existingPiece = currentInfo.find((info) => info.slug === piece.slug);
-  //           return existingPiece || { slug: piece.slug, isFavorite: false };
-  //         })
-  //       );
-  //     }
-  //   }, [data]);
-
-  //   // Funktion, um den Favoritenstatus eines Kunstwerks umzuschalten
-  //   const toggleFavorite = (slug) => {
-  //     setArtPiecesInfo((currentInfo) =>
-  //       currentInfo.map((piece) =>
-  //         piece.slug === slug ? { ...piece, isFavorite: !piece.isFavorite } : piece
-  //       )
-  //     );
-  //   };
-  //  // ___________________
-  const [isFavorite, setIsFavorite] = useState(false);
-
+  // Globaler Zustand für artPiecesInfo (mit Favoritenstatus)
   const [artPiecesInfo, setArtPiecesInfo] = useState([]);
 
-  function handleToggleFavorite(slug) {
-    const artPiece = artPiecesInfo.find((piece) => piece.slug === slug);
-    if (artPiece) {
+  // Initialisiere artPiecesInfo mit den Kunstwerken aus der API
+  useEffect(() => {
+    if (data && artPiecesInfo.length === 0) {
       setArtPiecesInfo(
-        artPiecesInfo.map((pieceInfo) =>
-          pieceInfo.slug === slug
-            ? { slug, isFavorite: !pieceInfo.isFavorite }
-            : pieceInfo
-        )
+        data.map((piece) => ({
+          slug: piece.slug,
+          isFavorite: false, // Standardmäßig nicht favorisiert
+        }))
       );
-    } else {
-      setArtPiecesInfo([...artPiecesInfo, { slug, isFavorite: true }]);
     }
+  }, [data, artPiecesInfo]);
+
+  // Funktion, um den Favoritenstatus umzuschalten
+  function handleToggleFavorite(slug) {
+    setArtPiecesInfo((prevInfo) =>
+      prevInfo.map((piece) =>
+        piece.slug === slug
+          ? { ...piece, isFavorite: !piece.isFavorite }
+          : piece
+      )
+    );
   }
+  // Kunstwerke mit Favoriteninformationen kombinieren
+  const piecesWithFavorites = data?.map((piece) => ({
+    ...piece,
+    isFavorite:
+      artPiecesInfo.find((info) => info.slug === piece.slug)?.isFavorite ||
+      false,
+  }));
 
   if (error) return <div>failed to load</div>;
-  if (!data) {
-    return <div>loading...</div>;
-  }
+  if (!data) return <div>loading...</div>;
 
   return (
     <>
@@ -72,8 +64,7 @@ export default function App({ Component, pageProps }) {
 
       <Component
         {...pageProps}
-        isFavorite={isFavorite}
-        pieces={data}
+        pieces={piecesWithFavorites}
         artPiecesInfo={artPiecesInfo}
         onToggleFavorite={handleToggleFavorite}
       />
