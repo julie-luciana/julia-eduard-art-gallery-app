@@ -6,7 +6,7 @@ export default function ArtPiecePreview({ image, title, artist }) {
       <Image
         src={image}
         alt={title}
-        layout="responsive" // Das Bild wird proportional verkleinert/vergrößert
+        // layout="responsive" // Das Bild wird proportional verkleinert/vergrößert
         width={100} // relative Breite, keine feste Pixel-Angabe
         height={100}
       />
