@@ -2,7 +2,7 @@ import Layout from "@/components/Layout/Layout";
 import GlobalStyle from "../styles";
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-import FavoriteButton from "@/components/FavoriteButton/FavoriteButton";
+import useLocalStorageState from "use-local-storage-state";
 
 const URL = "https://example-apis.vercel.app/api/art";
 
@@ -22,7 +22,12 @@ export default function App({ Component, pageProps }) {
   const { data, error } = useSWR(URL, fetcher);
 
   // global state for artPiecesInfo
-  const [artPiecesInfo, setArtPiecesInfo] = useState([]);
+  const [artPiecesInfo, setArtPiecesInfo] = useLocalStorageState(
+    "art-pieces-info",
+    {
+      defaultValue: [],
+    }
+  );
 
   // artPiecesInfo ist ein neues Objekt, das in data "gepusht" werden soll
   // was soll alles hinzugefügt werden, wenn Objekt leer && data von API vorhanden?
@@ -33,10 +38,11 @@ export default function App({ Component, pageProps }) {
         data.map((piece) => ({
           slug: piece.slug,
           isFavorite: false,
+          comments: [],
         }))
       );
     }
-  }, [data, artPiecesInfo]);
+  }, [data, artPiecesInfo, setArtPiecesInfo]);
 
   // toggle favorite für artPiecesInfo (ändert nur isFavorite von artPiecesInfo)
   function handleToggleFavorite(slug) {
