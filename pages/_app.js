@@ -21,22 +21,23 @@ export default function App({ Component, pageProps }) {
 
   const { data, error } = useSWR(URL, fetcher);
 
-  // Globaler Zustand für artPiecesInfo (mit Favoritenstatus) ohne Local Storage
+  // global state of artPiecesInfo
   const [artPiecesInfo, setArtPiecesInfo] = useState([]);
 
-  // Initialisiere artPiecesInfo mit den Kunstwerken aus der API
+  // artPiecesInfo ist ein neues Objekt,
+  // was soll alles hinzugefügt werden, wenn Objekt leer && daten vorhanden?
+  // -> slug & isFavorite (später auch comment)
   useEffect(() => {
     if (data && artPiecesInfo.length === 0) {
       setArtPiecesInfo(
         data.map((piece) => ({
           slug: piece.slug,
-          isFavorite: false, // Standardmäßig nicht favorisiert
+          isFavorite: false,
         }))
       );
     }
   }, [data, artPiecesInfo]);
 
-  // Funktion, um den Favoritenstatus umzuschalten
   function handleToggleFavorite(slug) {
     setArtPiecesInfo((pieces) =>
       pieces.map((piece) =>
