@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function ArtPieceDetailsPage({
   pieces,
   onToggleFavorite,
-  artPiecesInfo,
   onAddComment,
+  artPiecesInfo,
 }) {
   const router = useRouter();
   const { slug } = router.query;
@@ -16,11 +16,11 @@ export default function ArtPieceDetailsPage({
   if (!currentArtPiece) {
     return <div>Loading...</div>;
   }
+
   // destructure currentArtPiece to return it with this names from API
-  const { name, year, genre, imageSource, artist, isFavorite } =
+  const { name, year, genre, imageSource, artist, isFavorite, colors } =
     currentArtPiece;
 
-  console.log(imageSource);
   return (
     <>
       <ArtPieceDetail
@@ -35,11 +35,12 @@ export default function ArtPieceDetailsPage({
             ?.isFavorite
         }
         onToggleFavorite={() => onToggleFavorite(currentArtPiece.slug)}
-        onAddComment={onAddComment}
+        onAddComment={onAddComment} // Kommentare hinzufügen
         comments={
           artPiecesInfo.find((piece) => piece.slug === currentArtPiece.slug)
             ?.comments || []
-        } // Kommentare übergeben
+        }
+        colors={colors}
       />
       <Link href="/art-pieces">
         <button>Back to Gallery</button>
