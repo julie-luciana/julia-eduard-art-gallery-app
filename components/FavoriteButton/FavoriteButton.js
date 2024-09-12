@@ -1,10 +1,10 @@
 import Heart from "./Heart"; // Verwende die Heart-Komponente korrekt
 import styled from "styled-components";
 
-// syling von Heart-Komponente
+// syling der Heart-Komponente
 const StyledHeart = styled(Heart)`
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   fill: ${({ isFavorite }) => (isFavorite ? "red" : "none")};
   stroke: ${({ isFavorite }) => (isFavorite ? "none" : "black")};
   stroke-width: 1px;
@@ -16,7 +16,7 @@ const StyledHeart = styled(Heart)`
       isFavorite ? "darkred" : "grey"}; /* Randänderung beim Hover */
   }
 `;
-
+// hässlichen Hintergrund entfernen
 const Button = styled.button`
   background: none;
   border: none;
