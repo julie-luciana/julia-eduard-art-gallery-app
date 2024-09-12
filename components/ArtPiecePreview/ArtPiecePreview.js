@@ -20,7 +20,7 @@ export default function ArtPiecePreview({
       />
       <h2>{title}</h2>
       <p> {artist} </p>
-      {/* Direkt isFavorite und onToggleFavorite verwenden */}
+
       <FavoriteButton
         isFavorite={isFavorite}
         onToggleFavorite={() => onToggleFavorite(slug)}
