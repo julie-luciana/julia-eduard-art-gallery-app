@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
 
   const { data, error } = useSWR(URL, fetcher);
 
-  // Globaler Zustand für artPiecesInfo (mit Favoritenstatus)
+  // Globaler Zustand für artPiecesInfo (mit Favoritenstatus) ohne Local Storage
   const [artPiecesInfo, setArtPiecesInfo] = useState([]);
 
   // Initialisiere artPiecesInfo mit den Kunstwerken aus der API
@@ -38,16 +38,17 @@ export default function App({ Component, pageProps }) {
 
   // Funktion, um den Favoritenstatus umzuschalten
   function handleToggleFavorite(slug) {
-    setArtPiecesInfo((prevInfo) =>
-      prevInfo.map((piece) =>
+    setArtPiecesInfo((pieces) =>
+      pieces.map((piece) =>
         piece.slug === slug
           ? { ...piece, isFavorite: !piece.isFavorite }
           : piece
       )
     );
   }
+
   // Kunstwerke mit Favoriteninformationen kombinieren
-  const piecesWithFavorites = data?.map((piece) => ({
+  const pieces = data?.map((piece) => ({
     ...piece,
     isFavorite:
       artPiecesInfo.find((info) => info.slug === piece.slug)?.isFavorite ||
@@ -61,10 +62,9 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <Layout />
-
       <Component
         {...pageProps}
-        pieces={piecesWithFavorites}
+        pieces={pieces}
         artPiecesInfo={artPiecesInfo}
         onToggleFavorite={handleToggleFavorite}
       />

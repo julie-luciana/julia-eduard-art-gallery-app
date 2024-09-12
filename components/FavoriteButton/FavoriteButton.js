@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 // syling der Heart-Komponente
 const StyledHeart = styled(Heart)`
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   fill: ${({ isFavorite }) => (isFavorite ? "red" : "none")};
   stroke: ${({ isFavorite }) => (isFavorite ? "none" : "black")};
   stroke-width: 1px;

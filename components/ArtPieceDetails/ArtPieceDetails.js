@@ -11,7 +11,6 @@ export default function ArtPieceDetail({
   isFavorite,
   onToggleFavorite,
 }) {
-  console.log("onToggleFavorite in ArtPieceDetail:", onToggleFavorite);
   return (
     <div>
       <h2>{title}</h2>

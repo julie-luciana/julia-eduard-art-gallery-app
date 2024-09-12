@@ -11,19 +11,12 @@ export default function ArtPiecePreview({
 }) {
   return (
     <div>
-      <Image
-        src={image}
-        alt={title}
-        // layout="responsive" // Das Bild wird proportional verkleinert/vergrößert
-        width={100} // relative Breite, keine feste Pixel-Angabe
-        height={100}
-      />
+      <Image src={image} alt={title} width={100} height={100} />
       <h2>{title}</h2>
       <p> {artist} </p>
-
       <FavoriteButton
         isFavorite={isFavorite}
-        onToggleFavorite={() => onToggleFavorite(slug)}
+        onToggleFavorite={() => onToggleFavorite(slug)} // Der slug wird weitergegeben
       />
     </div>
   );
