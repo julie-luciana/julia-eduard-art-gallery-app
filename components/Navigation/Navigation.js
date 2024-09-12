@@ -9,6 +9,9 @@ export default function Navigation() {
       <li>
         <Link href="/art-pieces">Pieces</Link>
       </li>
+      <li>
+        <Link href="/favorites/favorites">My Favorites</Link>
+      </li>
     </ul>
   );
 }
