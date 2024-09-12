@@ -6,6 +6,7 @@ export default function ArtPieceDetailsPage({
   pieces,
   onToggleFavorite,
   artPiecesInfo,
+  onAddComment,
 }) {
   const router = useRouter();
   const { slug } = router.query;
@@ -34,6 +35,11 @@ export default function ArtPieceDetailsPage({
             ?.isFavorite
         }
         onToggleFavorite={() => onToggleFavorite(currentArtPiece.slug)}
+        onAddComment={onAddComment}
+        comments={
+          artPiecesInfo.find((piece) => piece.slug === currentArtPiece.slug)
+            ?.comments || []
+        } // Kommentare übergeben
       />
       <Link href="/art-pieces">
         <button>Back to Gallery</button>

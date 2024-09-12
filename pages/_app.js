@@ -21,11 +21,11 @@ export default function App({ Component, pageProps }) {
 
   const { data, error } = useSWR(URL, fetcher);
 
-  // global state of artPiecesInfo
+  // global state for artPiecesInfo
   const [artPiecesInfo, setArtPiecesInfo] = useState([]);
 
-  // artPiecesInfo ist ein neues Objekt,
-  // was soll alles hinzugefügt werden, wenn Objekt leer && daten vorhanden?
+  // artPiecesInfo ist ein neues Objekt, das in data "gepusht" werden soll
+  // was soll alles hinzugefügt werden, wenn Objekt leer && data von API vorhanden?
   // -> slug & isFavorite (später auch comment)
   useEffect(() => {
     if (data && artPiecesInfo.length === 0) {
@@ -38,6 +38,7 @@ export default function App({ Component, pageProps }) {
     }
   }, [data, artPiecesInfo]);
 
+  // toggle favorite für artPiecesInfo (ändert nur isFavorite von artPiecesInfo)
   function handleToggleFavorite(slug) {
     setArtPiecesInfo((pieces) =>
       pieces.map((piece) =>
@@ -48,17 +49,37 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  // Kunstwerke mit Favoriteninformationen kombinieren
+  // add comment für artPiecesInfo (ändert nur commentar von artPiecesInfo)
+  function handleAddComment(slug, comment) {
+    setArtPiecesInfo((pieces) =>
+      pieces.map((piece) =>
+        piece.slug === slug
+          ? {
+              ...piece,
+              comments: [...(piece.comments || []), comment], // neuer comment unter altem comment oder neues array für neuen comment
+            }
+          : piece
+      )
+    );
+  }
+
+  // Sind data uas API da? -> nennen wir pieces, werden array hinzugefügt
+  // gibt es veränderte Infos für isFavorite und/oder neuen comment?
+  // veränderte Infos entspricht artPiecesInfo
+  // -> falls es gibt -> fügt sie ggf data aus API (=pieces) hinzu
   const pieces = data?.map((piece) => ({
     ...piece,
     isFavorite:
       artPiecesInfo.find((info) => info.slug === piece.slug)?.isFavorite ||
       false,
+    comments:
+      artPiecesInfo.find((info) => info.slug === piece.slug)?.comments || [],
   }));
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
+  // Funktionen als props an alle components weitergeben können
   return (
     <>
       <GlobalStyle />
@@ -68,6 +89,7 @@ export default function App({ Component, pageProps }) {
         pieces={pieces}
         artPiecesInfo={artPiecesInfo}
         onToggleFavorite={handleToggleFavorite}
+        onAddComment={handleAddComment}
       />
     </>
   );
