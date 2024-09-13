@@ -1,5 +1,20 @@
+import Head from "next/head";
 import { useState, useEffect } from "react";
 import Spotlight from "@/components/Spotlight/Spotlight";
+import styled from "styled-components";
+
+const Header = styled.header`
+  psotion: sticky;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const Title = styled.h1`
+  font-size: 36px;
+  margin: 0;
+`;
 
 export default function SpotlightPage({
   pieces,
@@ -29,14 +44,17 @@ export default function SpotlightPage({
   const isFavorite = currentPieceInfo ? currentPieceInfo.isFavorite : false;
 
   return (
-    <div>
-      <h1>Art Gallery - Spotlight</h1>
+    <>
+      <Header>
+        <Title>Art Gallery - Spotlight</Title>
+      </Header>
+
       <Spotlight
         image={randomPiece.imageSource}
         artist={randomPiece.artist}
         isFavorite={isFavorite}
         onToggleFavorite={() => onToggleFavorite(randomPiece.slug)}
       />
-    </div>
+    </>
   );
 }

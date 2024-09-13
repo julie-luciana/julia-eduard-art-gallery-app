@@ -69,7 +69,7 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  // Sind data uas API da? -> nennen wir pieces, werden array hinzugefügt
+  // Sind data aus API da? -> nennen wir pieces, werden array hinzugefügt
   // gibt es veränderte Infos für isFavorite und/oder neuen comment?
   // veränderte Infos entspricht artPiecesInfo
   // -> falls es gibt -> fügt sie ggf data aus API (=pieces) hinzu

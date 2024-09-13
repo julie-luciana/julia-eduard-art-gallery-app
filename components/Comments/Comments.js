@@ -1,5 +1,5 @@
 export default function Comments({ comments = [] }) {
-  // Standardwert ist ein leeres Array
+  // standard ist leeres Array
   return (
     <div>
       <h2>Comments</h2>

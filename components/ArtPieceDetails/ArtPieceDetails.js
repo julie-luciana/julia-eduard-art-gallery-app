@@ -4,13 +4,15 @@ import CommentForm from "../CommentForm/CommentForm";
 import Comments from "../Comments/Comments";
 import styled from "styled-components";
 
+// ColorPalette gestyled
 const ColorPalette = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 20px;
 `;
-
+// Farbe, die Kreis hat, wird als Props übergeben
+// (in Funktion: color aus data übergeben und in return gemappt, dass jede Farbe eigenen Kreis bekommt
 const ColorCircle = styled.div`
   width: 30px;
   height: 30px;
@@ -45,21 +47,15 @@ export default function ArtPieceDetail({
       <p>{artist}</p>
       <p>Year: {year}</p>
       <p>Genre: {genre}</p>
-
-      {/* Favorite Button */}
       <FavoriteButton
         isFavorite={isFavorite}
         onToggleFavorite={() => onToggleFavorite(slug)}
       />
-
-      {/* Kommentare anzeigen */}
       <Comments comments={comments} />
-
-      {/* Kommentarformular */}
       <CommentForm onSubmitComment={(comment) => onAddComment(slug, comment)} />
-
       <h3>Color Palette</h3>
       <ColorPalette>
+        {/* mappen über Farben (aus data)*/}
         {colors.map((color, index) => (
           <ColorCircle key={index} color={color} />
         ))}

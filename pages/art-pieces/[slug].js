@@ -29,13 +29,13 @@ export default function ArtPieceDetailsPage({
         artist={artist}
         year={year}
         genre={genre}
-        slug={slug} // slug übergeben für onToggleFavorite
+        slug={slug}
         isFavorite={
           artPiecesInfo.find((piece) => piece.slug === currentArtPiece.slug)
             ?.isFavorite
         }
         onToggleFavorite={() => onToggleFavorite(currentArtPiece.slug)}
-        onAddComment={onAddComment} // Kommentare hinzufügen
+        onAddComment={onAddComment}
         comments={
           artPiecesInfo.find((piece) => piece.slug === currentArtPiece.slug)
             ?.comments || []
