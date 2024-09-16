@@ -1,6 +1,7 @@
 import ArtPieceDetail from "@/components/ArtPieceDetails/ArtPieceDetails";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import BackButton from "@/components/BackButton/BackButton";
 
 export default function ArtPieceDetailsPage({
   pieces,
@@ -43,7 +44,7 @@ export default function ArtPieceDetailsPage({
         colors={colors}
       />
       <Link href="/art-pieces">
-        <button>Back to Gallery</button>
+        <BackButton />
       </Link>
     </>
   );

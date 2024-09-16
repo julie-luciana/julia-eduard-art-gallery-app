@@ -1,14 +1,11 @@
-import Head from "next/head";
 import { useState, useEffect } from "react";
 import Spotlight from "@/components/Spotlight/Spotlight";
 import styled from "styled-components";
+import FavoriteButton from "@/components/FavoriteButton/FavoriteButton";
 
 const Header = styled.header`
-  psotion: sticky;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
 `;
 
 const Title = styled.h1`
@@ -45,13 +42,10 @@ export default function SpotlightPage({
 
   return (
     <>
-      <Header>
-        <Title>Art Gallery - Spotlight</Title>
-      </Header>
-
       <Spotlight
         image={randomPiece.imageSource}
         artist={randomPiece.artist}
+        title={randomPiece.name}
         isFavorite={isFavorite}
         onToggleFavorite={() => onToggleFavorite(randomPiece.slug)}
       />
