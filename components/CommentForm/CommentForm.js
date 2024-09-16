@@ -56,7 +56,6 @@ export default function CommentForm({ onSubmitComment }) {
         placeholder="Add your comment"
       />
       <SubmitButton type="submit">Send</SubmitButton>{" "}
-      {/* Der Button, um den Kommentar abzuschicken */}
     </CommentFormContainer>
   );
 }
