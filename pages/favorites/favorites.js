@@ -1,4 +1,33 @@
 import ArtPieces from "@/components/ArtPieces/ArtPieces";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: block;
+  margin-bottom: 50px;
+`;
+
+const HeadingFavorites = styled.h1`
+  display: flex;
+  font-family: "Helvetica", sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 5%;
+`;
+
+const NoFavoritesMessage = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--color-active);
+  margin: 20%;
+`;
 
 export default function FavoritesPage({
   artPiecesInfo,
@@ -26,8 +55,9 @@ export default function FavoritesPage({
     }
   }
   return (
-    <div>
-      <h1>My Favorite Art Pieces</h1>
+    <Container>
+      <HeadingFavorites>Favorites</HeadingFavorites>
+
       {favoritePieces.length > 0 ? (
         <ArtPieces
           pieces={favoritePieces}
@@ -36,8 +66,8 @@ export default function FavoritesPage({
           onToggleFavorite={handleToggleFavoriteConfirm}
         />
       ) : (
-        <p>No favorites found.</p>
+        <NoFavoritesMessage>No favorites found.</NoFavoritesMessage>
       )}
-    </div>
+    </Container>
   );
 }

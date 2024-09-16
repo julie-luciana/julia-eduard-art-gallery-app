@@ -1,8 +1,12 @@
 import Layout from "@/components/Layout/Layout";
 import GlobalStyle from "../styles";
 import useSWR from "swr";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import Navigation from "@/components/Navigation/Navigation";
+import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
+import Preloader from "@/components/Preloader/Preloader";
 
 const URL = "https://example-apis.vercel.app/api/art";
 
@@ -83,13 +87,15 @@ export default function App({ Component, pageProps }) {
   }));
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data) return <Preloader />;
 
   // Funktionen als props an alle components weitergeben können
   return (
     <>
-      <GlobalStyle />
+      <Header />
+      <Navigation />
       <Layout />
+      <GlobalStyle />
       <Component
         {...pageProps}
         pieces={pieces}
@@ -97,6 +103,7 @@ export default function App({ Component, pageProps }) {
         onToggleFavorite={handleToggleFavorite}
         onAddComment={handleAddComment}
       />
+      <Footer />
     </>
   );
 }
